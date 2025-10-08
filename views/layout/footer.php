@@ -422,6 +422,7 @@
 	<script src="<?=$base_url?>/assets/vendor_components/jvectormap/lib2/jquery-jvectormap-2.0.2.min.js"></script>
 	<script src="<?=$base_url?>/assets/fastly.jsdelivr.net/npm/echarts%405.5.1/dist/echarts.min.js"></script>
 	<script src="<?=$base_url?>/assets/vendor_components/OwlCarousel2/dist/owl.carousel.js"></script>
+	<script src="<?=$base_url?>/assets/vendor_plugins/JqueryPrintArea/demo/jquery.PrintArea.js"></script>
 
 	<!-- Resources -->
 	<script src="<?=$base_url?>/assets/cdn.amcharts.com/lib/5/index.js"></script>

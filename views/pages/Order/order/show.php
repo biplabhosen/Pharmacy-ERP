@@ -3,8 +3,8 @@
 			<div class="col-12">
 			  <div class="bb-1 clearFix">
 				<div class="text-end pb-15">
-					<button class="btn btn-success" type="button"> <span><i class="fa fa-print"></i> Save</span> </button>
-					<button id="print2" class="btn btn-warning" type="button"> <span><i class="fa fa-print"></i> Print</span> </button>
+					<button class="btn btn-success" type="button"> <span><i class="fa-solid fa-print"></i> Save</span> </button>
+					<button id="print2" class="btn btn-warning" type="button"> <span><i class="fa-solid fa-print"></i> Print</span> </button>
 				</div>	
 			  </div>
 			</div>
@@ -75,18 +75,22 @@
 
 				<?php
 				$orderdetails=OrdersDetail::findAllByOrder_id($order->id);
-
+				$count=1;
+				$total=0;
+				$nettotal=0;
 				foreach ($orderdetails as $value) {
 					$name=Medicine::find($value['medicine_id']);
-					$total=$value['unit_price']*$value['qty'];
+					$subtotal=$value['unit_price']*$value['qty'];
 				echo "<tr>
-				  <td>{$value['id']}</td>
+				  <td>$count</td>
 				  <td>$name->name $name->strength</td>
-				  <td>2488627789</td>
+				  <td>000{$value['id']}</td>
 				  <td class=\"text-end\">{$value['qty']}</td>
 				  <td class=\"text-end\">{$value['unit_price']}</td>
-				  <td class=\"text-end\">$$total</td>
+				  <td class=\"text-end\">$$subtotal</td>
 				</tr>";
+				$count++;
+				$total+=$subtotal;
 				}
 				?>
 				
@@ -101,8 +105,8 @@
 				<p class="lead"><b>Payment Due</b><span class="text-danger"> 14/08/2018 </span></p>
 
 				<div>
-					<p>Sub - Total amount  :  $3,592.00</p>
-					<p>Tax (18%)  :  $646.56</p>
+					<p>Sub - Total amount  :  $<?=$total?></p>
+					<p>Tax (18%)  :  $<?=$total*(18/100)?></p>
 					<p>Shipping  :  $110.44</p>
 				</div>
 				<div class="total-payment">

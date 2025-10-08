@@ -87,7 +87,7 @@ class OrdersDetail extends Model implements JsonSerializable{
 	public function __toString(){
 		return "		Id:$this->id<br> 
 		Order Id:$this->order_id<br> 
-		Product Id:$this->medicine_id<br> 
+		Medicine Id:$this->medicine_id<br> 
 		Qty:$this->qty<br> 
 		Unit Price:$this->unit_price<br> 
 		Discount:$this->discount<br> 
@@ -118,9 +118,9 @@ class OrdersDetail extends Model implements JsonSerializable{
 		$html="<table class='table'>";
 			$html.="<tr><th colspan='3'>".Html::link(["class"=>"btn btn-success","route"=>"ordersdetail/create","text"=>"New OrdersDetail"])."</th></tr>";
 		if($action){
-			$html.="<tr><th>Id</th><th>Order Id</th><th>Product Id</th><th>Qty</th><th>Unit Price</th><th>Discount</th><th>Created At</th><th>Updated At</th><th>Action</th></tr>";
+			$html.="<tr><th>Id</th><th>Order Id</th><th>Medicine Id</th><th>Qty</th><th>Unit Price</th><th>Discount</th><th>Created At</th><th>Updated At</th><th>Action</th></tr>";
 		}else{
-			$html.="<tr><th>Id</th><th>Order Id</th><th>Product Id</th><th>Qty</th><th>Unit Price</th><th>Discount</th><th>Created At</th><th>Updated At</th></tr>";
+			$html.="<tr><th>Id</th><th>Order Id</th><th>Medicine Id</th><th>Qty</th><th>Unit Price</th><th>Discount</th><th>Created At</th><th>Updated At</th></tr>";
 		}
 		while($ordersdetail=$result->fetch_object()){
 			$action_buttons = "";
@@ -145,7 +145,7 @@ class OrdersDetail extends Model implements JsonSerializable{
 		$html.="<tr><th colspan=\"2\">OrdersDetail Show</th></tr>";
 		$html.="<tr><th>Id</th><td>$ordersdetail->id</td></tr>";
 		$html.="<tr><th>Order Id</th><td>$ordersdetail->order_id</td></tr>";
-		$html.="<tr><th>Product Id</th><td>$ordersdetail->medicine_id</td></tr>";
+		$html.="<tr><th>Medicine Id</th><td>$ordersdetail->medicine_id</td></tr>";
 		$html.="<tr><th>Qty</th><td>$ordersdetail->qty</td></tr>";
 		$html.="<tr><th>Unit Price</th><td>$ordersdetail->unit_price</td></tr>";
 		$html.="<tr><th>Discount</th><td>$ordersdetail->discount</td></tr>";
