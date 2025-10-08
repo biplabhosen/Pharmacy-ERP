@@ -1,0 +1,1 @@
+<li title="Dashboard"><a href="<?=$base_url?>/payment"><i data-feather="credit-card"></i><span>Payments <span class="bg-danger fs-10 px-1 rounded">NEW</span> </span></a></li>
