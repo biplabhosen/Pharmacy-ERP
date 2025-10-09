@@ -106,11 +106,11 @@
 
 				<div>
 					<p>Sub - Total amount  :  $<?=$total?></p>
-					<p>Tax (18%)  :  $<?=$total*(18/100)?></p>
-					<p>Shipping  :  $110.44</p>
+					<p>Dicount (18%)  :  $<?=floor($total*(18/100))?></p>
+					<!-- <p>Shipping  :  $110.44</p> -->
 				</div>
 				<div class="total-payment">
-					<h3><b>Total :</b> $4,349.00</h3>
+					<h3><b>Total :</b>$<?=$total-(floor($total*(18/100)))?> </h3>
 				</div>
 
 			</div>
