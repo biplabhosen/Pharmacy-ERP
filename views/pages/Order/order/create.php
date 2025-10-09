@@ -32,7 +32,7 @@
 				</address>
 			</div>
 			<!-- /.col -->
-			<div class="col-md-6 invoice-col text-end">
+			<!-- <div class="col-md-6 invoice-col text-end">
 				<strong>To</strong>
 				<address>
 					<strong class="text-blue fs-24"><?php
@@ -44,10 +44,10 @@
 					<strong>Phone: <?php
 									// echo (Customer::find("$order->customer_id")->phone);
 									?> &nbsp;&nbsp;&nbsp;&nbsp; Email: <?php
-													// echo (Customer::find("$order->customer_id")->email);
-													?></strong>
+																		// echo (Customer::find("$order->customer_id")->email);
+																		?></strong>
 				</address>
-			</div>
+			</div> -->
 			<!-- /.col -->
 			<div class="col-sm-12 invoice-col mb-15">
 				<div class="invoice-details row no-margin">
@@ -65,7 +65,6 @@
 		<div class="row mb-4">
 			<div class="col-sm-6">
 				<h6 class="mb-1">Bill To</h6>
-				<!-- <input id="billTo" class="form-control form-control-sm" value="Customer Name"> -->
 				<?php
 				echo Customer::html_select("customer");
 				?>
@@ -88,10 +87,28 @@
 						<tr>
 							<th>#</th>
 							<th>Description</th>
-							<th>Serial #</th>
+							<th>Strength</th>
 							<th class="text-end">Quantity</th>
 							<th class="text-end">Unit Cost</th>
 							<th class="text-end">Subtotal</th>
+							<th class="text-end">Action</th>
+						</tr>
+						<tr>
+							<th>1</th>
+							<th>
+								<?php
+								echo Medicine::html_select("medicine");
+								?>
+							</th>
+							<th id="strength">
+								
+							</th>
+							<th class="text-end">
+								<input type="number" min="0" step="" class="form-control form-control-sm qty" value="1">
+							</th>
+							<th class="text-end">Unit Cost</th>
+							<th class="text-end">Subtotal</th>
+							<td class="no-print text-end"><button class="btn btn-md btn-success  add-row">Add</button></td>
 						</tr>
 						<thead>
 						<tbody>
@@ -148,32 +165,41 @@
 	</section>
 
 	<script>
-		$(function(){
-			$("#customer").on("change",function(){
-				let customer_id=$(this).val();
+		$(function() {
+			$("#customer").on("change", function() {
+				let customer_id = $(this).val();
 				// alert(customer_id)
 
 				$.ajax({
-					url:"<?=$base_url?>/api/customer/find",
-					type:"GET",
-					data:{id:customer_id},
-					success:function(res){
-						// console.log(res);
-						let data=JSON.parse(res).customer;
-						console.log(data.address);
-						
-						$(".billAddress").val(data.address)
-						
+					url: "<?= $base_url ?>/api/customer/find",
+					type: "GET",
+					data: {
+						id: customer_id
 					},
-					error:function(err){
+					success: function(res) {
+						// console.log(res);
+						let data = JSON.parse(res).customer;
+						console.log(data.address);
+
+						$(".billAddress").val(data.address)
+
+					},
+					error: function(err) {
 						console.log(err);
-						
+
 					}
 
 
 				})
 
 
+
+			})
+			$("#medicine").on("change", function() {
+			  let medicinen_name= 	 $(this).find("option:selected").attr("data-strength");
+				$("#strength").text(medicinen_name);
+              console.log(medicinen_name);
+			  
 
 			})
 

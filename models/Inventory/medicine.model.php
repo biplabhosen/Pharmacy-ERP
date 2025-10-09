@@ -81,6 +81,13 @@ class Medicine extends Model implements JsonSerializable{
 		$medicine=$result->fetch_object();
 			return $medicine;
 	}
+
+	public static function findBystrength($id){
+		global $db,$tx;
+		$result =$db->query("select id,name,generic_name,img,category_id,manufacturer_id,strength,unit,batch_number,expiry_date,purchase_price,selling_price,created_at,updated_at from {$tx}medicines where id='$id'");
+		$medicine=$result->fetch_object();
+			return $medicine;
+	}
 	static function get_last_id(){
 		global $db,$tx;
 		$result =$db->query("select max(id) last_id from {$tx}medicines");
@@ -112,10 +119,21 @@ class Medicine extends Model implements JsonSerializable{
 
 	static function html_select($name="cmbMedicine"){
 		global $db,$tx;
-		$html="<select id='$name' name='$name'> ";
-		$result =$db->query("select id,name from {$tx}medicines");
+		$html="<select class='form-select' id='$name' name='$name'> ";
+		$result =$db->query("select id,name, strength from {$tx}medicines");
 		while($medicine=$result->fetch_object()){
-			$html.="<option value ='$medicine->id'>$medicine->name</option>";
+			$html.="<option data-strength='$medicine->strength' value ='$medicine->id'>$medicine->name</option>";
+		}
+		$html.="</select>";
+		return $html;
+	}
+
+	static function html_selectst($strength="cmbMedicine"){
+		global $db,$tx;
+		$html="<select class='form-select' id='$strength' name='$strength'> ";
+		$result =$db->query("select id,strength from {$tx}medicines");
+		while($medicine=$result->fetch_object()){
+			$html.="<option value ='$medicine->id'>$medicine->strength</option>";
 		}
 		$html.="</select>";
 		return $html;
