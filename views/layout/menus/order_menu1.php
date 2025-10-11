@@ -1,1 +1,1 @@
-<li title="Dashboard"><a href="<?=$base_url?>/order1"><i data-feather="shopping-cart"></i><span>Orders <span class="bg-danger fs-10 px-1 rounded">NEW</span> </span></a></li>
+<li title="Dashboard"><a href="<?=$base_url?>/order"><i data-feather="shopping-cart"></i><span>Orders <span class="bg-danger fs-10 px-1 rounded">NEW</span> </span></a></li>

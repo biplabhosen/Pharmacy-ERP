@@ -11,7 +11,7 @@
 			</div>
 			<div class="col-12">
 				<div class="page-header">
-					<h2 class="d-inline"><span class="fs-30">Create order</span></h2>
+					<h2 class="d-inline"><span class="fs-30">Invoice</span></h2>
 					<div class="pull-right text-end">
 						<h3><?php
 							echo date("d M Y H:i:s", time());
@@ -101,13 +101,13 @@
 								?>
 							</th>
 							<th id="strength">
-								
+
 							</th>
 							<th class="text-end">
-								<input type="number" min="0" step="" class="form-control form-control-sm qty" value="1">
+								<input type="number" min="1" step="" class=" qty form-control form-control-md" value="1">
 							</th>
-							<th class="text-end">Unit Cost</th>
-							<th class="text-end">Subtotal</th>
+							<th class="text-end" id="price">0.00</th>
+							<th class="text-end sub_total">0.00</th>
 							<td class="no-print text-end"><button class="btn btn-md btn-success  add-row">Add</button></td>
 						</tr>
 						<thead>
@@ -179,9 +179,10 @@
 					success: function(res) {
 						// console.log(res);
 						let data = JSON.parse(res).customer;
-						console.log(data.address);
+						// console.log(data.address);
 
-						$(".billAddress").val(data.address)
+						$(".billAddress").val(data.address);
+						
 
 					},
 					error: function(err) {
@@ -196,12 +197,33 @@
 
 			})
 			$("#medicine").on("change", function() {
-			  let medicinen_name= 	 $(this).find("option:selected").attr("data-strength");
-				$("#strength").text(medicinen_name);
-              console.log(medicinen_name);
-			  
+				let medicinen_price = $(this).find("option:selected").attr("data-price");
+				$("#price").text(medicinen_price);
+				$(".qty").val(1);
+				$(".sub_total").text(medicinen_price);
 
 			})
+
+			$(".qty").on("change", function() {
+				let val = $(this).val()
+
+				let price = $("#price").text();
+				console.log(price);
+				$(".sub_total").text(price * val);
+			});
+
+			// $(".qty").on("change",()=>{
+			// 	alert(console.log($(this).val()));
+			// let subTotal=$(this).val();
+			// console.log(subTotal);
+
+			// $(".sub_total").text(subTotal);
+
+
+			// })
+
+
+
 
 
 
