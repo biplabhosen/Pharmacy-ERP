@@ -163,8 +163,10 @@
 			</div>
 		</div>
 	</section>
-
+	<script src="<?= $base_url ?>/js/cart.js"></script>
 	<script>
+		let order = new Cart("order")
+
 		$(function() {
 			$("#customer").on("change", function() {
 				let customer_id = $(this).val();
@@ -182,7 +184,7 @@
 						// console.log(data.address);
 
 						$(".billAddress").val(data.address);
-						
+
 
 					},
 					error: function(err) {
@@ -205,11 +207,11 @@
 			})
 
 			$(".qty").on("change", function() {
-				let val = $(this).val()
+				let qty = $(this).val();
 
 				let price = $("#price").text();
 				console.log(price);
-				$(".sub_total").text(price * val);
+				$(".sub_total").text(price * qty);
 			});
 
 			// $(".qty").on("change",()=>{
@@ -221,6 +223,38 @@
 
 
 			// })
+
+
+			// $(document).on("change", ".tax, .discount, .qty ", function() {
+			// 	let qty = $(".qty").val()
+			// 	let discount = $(".discount").val()
+			// 	let tax = $(".tax").val()
+			// 	let price = $(".price").val();
+			// 	$(".line-total").text(Math.round((price * qty) + tax - discount));
+			// });
+
+
+			$(".add-row").on("click",()=>{
+				let medicine_id= $("#medicine").val();
+				let medicine_name= $("#medicine").find("option:selected").text();
+				let qty = $(".qty").val();
+				let price = $("#price").text();
+				let sub_total =$(".sub_total").text();
+
+				console.log(medicine_id,medicine_name,qty,price,sub_total);
+				$data={
+					id:medicine_id,
+					name:medicine_name,
+					qty:qty,
+					price:price,
+					sub_total:sub_total
+				}
+				order.addItem($data);
+
+
+
+
+			})
 
 
 

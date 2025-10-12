@@ -7,16 +7,9 @@
     
      $username=trim($_POST["txtUsername"]);
      $password=trim($_POST["txtPassword"]);
-
-     if (!empty($username) && !empty($password)) {
-      header("location:home");
-     }else {
-      echo "Incorrect username or password";
-      header("location:index.php");
-     }
      //echo $username," ",$password;
-     //$result=$db->query("select u.id,u.username,r.name from {$tx}users u,{$tx}roles r where r.id=u.role_id and u.username='$username' and u.password='$password'");
-     $result=$db->query("select u.id,u.full_name,u.password,u.email,u.photo,u.mobile,u.role_id,r.name role from {$tx}users u,{$tx}roles r where r.id=u.role_id and u.name='$username' and u.inactive=0");
+    //  $result=$db->query("select u.id,u.name,r.name from {$tx}users u,{$tx}roles r where r.id=u.role_id and u.name='$username' and u.password='$password'");
+     $result=$db->query("select u.id,u.password,u.email,u.img,u.phone,u.role_id,r.name role from {$tx}users u,{$tx}roles r where r.id=u.role_id and u.name='$username' ");
       
          
       $user=$result->fetch_object();
@@ -24,10 +17,10 @@
       if($user && password_verify($password,$user->password)){
         
         $_SESSION["uid"]=$user->id;
-        $_SESSION["uname"]=$user->full_name;
-        $_SESSION["uphoto"]=$user->photo;
+        $_SESSION["uname"]=$user->name;
+        $_SESSION["uphoto"]=$user->img;
         $_SESSION["email"]=$user->email;
-        $_SESSION["mobile"]=$user->mobile; 
+        $_SESSION["mobile"]=$user->phone; 
         $_SESSION["role_id"]=$user->role_id;
         $_SESSION["urole"]=$user->role;
 
@@ -94,6 +87,7 @@
 											<input type="password" name="txtPassword" class="form-control ps-15 bg-transparent" placeholder="Password">
 										</div>
 									</div>
+								
 									  <div class="row">
 										<div class="col-6">
 										  <div class="checkbox">

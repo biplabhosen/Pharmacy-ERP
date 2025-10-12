@@ -1,122 +1,72 @@
 class Cart {
-  constructor(cartName) {
-    this.cartName=cartName;   
-  }
+    constructor(name) {
+        this.name = name;
+        
+        if (!localStorage.getItem(this.name)) {
+            localStorage.setItem(this.name, JSON.stringify([]));
+        };
+    };
 
-  // ==========Methods============
+    getData() {
+        let cartitems = JSON.parse(localStorage.getItem(this.name));
+        return cartitems;
+    };
 
-  getCart(){
-    let cart= localStorage.getItem(this.cartName);
-    cart=JSON.parse(cart);
-    return cart;
-   }//end getCart
-
-  save(item){
-    let cart= localStorage.getItem(this.cartName);
-
-    if(cart!=null){
-      if(!this.itemExists(item.item_id)){
-        cart=JSON.parse(cart);
-        cart.push(item);
-        localStorage.setItem(this.cartName, JSON.stringify(cart));
-      }else{
-        this.QtyUp(item.item_id,item.qty);
-      }
-
-    }else{
-      cart=[];
-      cart.push(item);
-      localStorage.setItem(this.cartName, JSON.stringify(cart));
-    }
-  }//end save
-
-
-  QtyUp(id,qty){
-    //console.log(id)
-    let cart= localStorage.getItem(this.cartName);
-    if(cart!=null){
-      cart=JSON.parse(cart);   
-      let tmp=[]; 
-      
-
-     cart.forEach(function(item,i){
-
-      if(id==item.item_id){
-           let discount=item.discount!=null?item.discount:0
-          
-           item.qty+=qty;
-           
-           if(item.qty<1)item.qty=1;            
-
-           discount= item.discount*item.qty;
-           item.total_discount=discount;
-           item.subtotal=(item.qty*item.price)-(discount);
-          
-          // console.log(item);
-           tmp.push(item);
-         }else{
-
-           tmp.push(item);
-         }
-
-     });
-
-                
-      localStorage.setItem(this.cartName, JSON.stringify(tmp));
-    }
- }//end QtyUp
-
-
- itemExists(id){
-    let found=0;
-    let cart= localStorage.getItem(this.cartName);
-    if(cart!=null){
-      cart=JSON.parse(cart);                   
-          
-
-      cart.forEach(function(item,i){
-        if(id==item.item_id){
-          found=1;                
-         }
-
-      });
-
-
-    }else{
-      found=0;
-    }
-
-    return found;
- }//end itemExists
-
- delItem(id){
-    let cart= localStorage.getItem(this.cartName);
-    if(cart!=null){
-      cart=JSON.parse(cart);   
-      let tmp=[];  
-
-     
-
-    cart.forEach(function(item,i){
-         if(id!=item.item_id){
-          tmp.push(item);
-         }
-      });
-
-
-      localStorage.setItem(this.cartName,JSON.stringify(tmp));
-    }
- }//end delItem
-
-
- clearCart(){
-      localStorage.removeItem(this.cartName);             
-      localStorage.setItem(this.cartName, JSON.stringify([]));
     
- } //end clearCart
+    addItem = (item) => {
+    let cartitems = JSON.parse(localStorage.getItem(this.name));
+
+    let itemExist = cartitems.find((i)=>{
+        return i.id ==item.id;
+    });
+
+    if (itemExist) {
+        itemExist.qty ++
+    } else {
+        let itempr = {...item,qty:1}
+        cartitems.push(itempr)
+    };
+
+    localStorage.setItem(this.name, JSON.stringify(cartitems));
+};
+
+incrementItem(itemId) {
+    let cartitems = JSON.parse(localStorage.getItem(this.name));
+    let itemExist = cartitems.find(item => item.id == itemId);
+    if (itemExist) {
+        itemExist.qty += 1;
+    }
+    localStorage.setItem(this.name, JSON.stringify(cartitems));
+}
+
+delItem(itemId){
+    let cartitems =JSON.parse( localStorage.getItem(this.name));
+   cartitems = cartitems.filter(item => item.id != itemId);
+   localStorage.setItem(this.name , JSON.stringify(cartitems));
+}
 
 
+ decrementItem(itemId){
+ let cartitems =JSON.parse( localStorage.getItem(this.name));
+  let itemExist= cartitems.find((item)=> { return  item.id == itemId });
+   if (itemExist && itemExist.qty > 1) {
+        itemExist.qty -= 1
+   }else {
+    cartitems = cartitems.filter(item => item.id != itemId);
+   }
+
+    localStorage.setItem(this.name , JSON.stringify(cartitems));
+}
+
+clearItem(){
+   let cartitems =JSON.parse( localStorage.getItem(this.name));
+    cartitems = [];
+    localStorage.setItem(this.name , JSON.stringify(cartitems));
+}
 
 
-  
-}//end class
+clearAll(){
+   localStorage.clear();
+}
+    
+};
