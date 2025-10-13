@@ -11,7 +11,7 @@
     //  $result=$db->query("select u.id,u.name,r.name from {$tx}users u,{$tx}roles r where r.id=u.role_id and u.name='$username' and u.password='$password'");
      $result=$db->query("select u.id,u.password,u.email,u.img,u.phone,u.role_id,r.name role from {$tx}users u,{$tx}roles r where r.id=u.role_id and u.name='$username' ");
       
-         
+    
       $user=$result->fetch_object();
 
       if($user && password_verify($password,$user->password)){
@@ -58,6 +58,7 @@
 	<!-- Style-->  
 	<link rel="stylesheet" href="assets/css/style.css">
 	<link rel="stylesheet" href="assets/css/skin_color.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 	
 <body class="hold-transition theme-primary bg-img" style="background-image: url(assets/images/auth-bg/bg-1.jpg)">
@@ -71,8 +72,11 @@
 						<div class="bg-white rounded10 shadow-lg">
 							<div class="content-top-agile p-20 pb-0">
 								<h2 class="text-primary">Let's Get Started</h2>
-								<p class="mb-0">Sign in to continue to WebkitX.</p>							
+								<p class="mb-0">Sign in to continue.</p>							
 							</div>
+							<?php
+							echo password_hash("123",PASSWORD_DEFAULT);
+							?>
 							<div class="p-40">
 								<form action="" method="post">
 									<div class="form-group">

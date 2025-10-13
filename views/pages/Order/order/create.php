@@ -93,21 +93,21 @@
 							<th class="text-end">Subtotal</th>
 							<th class="text-end">Action</th>
 						</tr>
-						<tr>
-							<th>1</th>
-							<th>
+						<tr class="no-print">
+							<th >1</th>
+							<th >
 								<?php
 								echo Medicine::html_select("medicine");
 								?>
-							</th>
+							</th class="no-print">
 							<th id="strength">
 
 							</th>
-							<th class="text-end">
+							<th class="no-print text-end">
 								<input type="number" min="1" step="" class=" qty form-control form-control-md" value="1">
 							</th>
-							<th class="text-end" id="price">0.00</th>
-							<th class="text-end sub_total">0.00</th>
+							<th class="no-print text-end" id="price">0.00</th>
+							<th class="no-print text-end sub_total">0.00</th>
 							<td class="no-print text-end"><button class="btn btn-md btn-success  add-row">Add</button></td>
 						</tr>
 						<thead>
