@@ -87,52 +87,33 @@
 						<tr>
 							<th>#</th>
 							<th>Description</th>
-							<th>Strength</th>
 							<th class="text-end">Quantity</th>
 							<th class="text-end">Unit Cost</th>
+							<th>Discout</th>
 							<th class="text-end">Subtotal</th>
 							<th class="text-end">Action</th>
 						</tr>
 						<tr class="no-print">
-							<th >1</th>
-							<th >
+							<th>1</th>
+							<th>
 								<?php
 								echo Medicine::html_select("medicine");
 								?>
 							</th class="no-print">
-							<th id="strength">
 
-							</th>
 							<th class="no-print text-end">
 								<input type="number" min="1" step="" class=" qty form-control form-control-md" value="1">
 							</th>
 							<th class="no-print text-end" id="price">0.00</th>
+							<th id="strength"><input type="number" class="discount form-control form-control-sm" value="0">
+							</th>
 							<th class="no-print text-end sub_total">0.00</th>
 							<td class="no-print text-end"><button class="btn btn-md btn-success  add-row">Add</button></td>
 						</tr>
 						<thead>
-						<tbody>
+						<tbody id="tbody">
 
-							<?php
-							$orderdetails = OrdersDetail::findAllByOrder_id($order->id);
-							$count = 1;
-							$total = 0;
-							$nettotal = 0;
-							foreach ($orderdetails as $value) {
-								$name = Medicine::find($value['medicine_id']);
-								$subtotal = $value['unit_price'] * $value['qty'];
-								echo "<tr>
-				  <td>$count</td>
-				  <td>$name->name $name->strength</td>
-				  <td>000{$value['id']}</td>
-				  <td class=\"text-end\">{$value['qty']}</td>
-				  <td class=\"text-end\">{$value['unit_price']}</td>
-				  <td class=\"text-end\">$$subtotal</td>
-				</tr>";
-								$count++;
-								$total += $subtotal;
-							}
-							?>
+
 
 
 						</tbody>
@@ -145,12 +126,12 @@
 				<p class="lead"><b>Payment Due</b><span class="text-danger"> 14/08/2018 </span></p>
 
 				<div>
-					<p>Sub - Total amount : $<?= $total ?></p>
-					<p>Dicount (18%) : $<?= floor($total * (18 / 100)) ?></p>
+					<p>Sub - Total amount : <span id="sub_total"></span></p>
+					<p>Discount (18%) :<span id="discount"></span></p>
 					<!-- <p>Shipping  :  $110.44</p> -->
 				</div>
 				<div class="total-payment">
-					<h3><b>Total :</b>$<?= $total - (floor($total * (18 / 100))) ?> </h3>
+					<h3 id=""><b>Total :<span id="total"></span></b></h3>
 				</div>
 
 			</div>
@@ -158,22 +139,23 @@
 		</div>
 		<div class="row no-print">
 			<div class="col-12">
-				<button type="button" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit Payment
+				<button type="button" id="order" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit
 				</button>
 			</div>
 		</div>
 	</section>
-	<script src="<?= $base_url ?>/js/cart.js"></script>
+	<script src=" <?= $base_url ?>/js/cart2.js"></script>
 	<script>
-		let order = new Cart("order")
-
 		$(function() {
+			let order = new Cart("cart")
+			printCart();
+
 			$("#customer").on("change", function() {
 				let customer_id = $(this).val();
 				// alert(customer_id)
 
 				$.ajax({
-					url: "<?= $base_url ?>/api/customer/find",
+					url: " $base_url ?>/api/customer/find",
 					type: "GET",
 					data: {
 						id: customer_id
@@ -200,18 +182,20 @@
 			})
 			$("#medicine").on("change", function() {
 				let medicinen_price = $(this).find("option:selected").attr("data-price");
-				$("#price").text(medicinen_price);
+				let price = $("#price").text(medicinen_price);
 				$(".qty").val(1);
+				// $("#discount").val(price*.2);
 				$(".sub_total").text(medicinen_price);
 
 			})
 
-			$(".qty").on("change", function() {
-				let qty = $(this).val();
+			$(document).on("change", ".qty", ".discount", function() {
+				let qty = parseFloat($(this).val());
 
-				let price = $("#price").text();
-				console.log(price);
-				$(".sub_total").text(price * qty);
+				let price = parseFloat($("#price").text());
+				// console.log(price, qty);
+				// let discount=parseFloat($(".discount").val()) ;
+				let sub = $(".sub_total").text(Math.round((price * qty)));
 			});
 
 			// $(".qty").on("change",()=>{
@@ -234,27 +218,122 @@
 			// });
 
 
-			$(".add-row").on("click",()=>{
-				let medicine_id= $("#medicine").val();
-				let medicine_name= $("#medicine").find("option:selected").text();
-				let qty = $(".qty").val();
-				let price = $("#price").text();
-				let sub_total =$(".sub_total").text();
+			$(".add-row").on("click", () => {
+				let medicine_id = $("#medicine").val();
+				let medicine_name = $("#medicine").find("option:selected").text();
+				let qty = parseFloat($(".qty").val());
+				// console.log(qty);
 
-				console.log(medicine_id,medicine_name,qty,price,sub_total);
-				$data={
-					id:medicine_id,
-					name:medicine_name,
-					qty:qty,
-					price:price,
-					sub_total:sub_total
+				let price = parseFloat($("#price").text());
+				let discount = parseFloat($(".discount").val());
+				let sub_total = parseFloat($(".sub_total").text());
+
+				console.log(medicine_id, medicine_name, qty, price, sub_total);
+				$data = {
+					id: medicine_id,
+					name: medicine_name,
+					qty: qty,
+					unit_price: price,
+					discount: discount,
+					sub_total: sub_total
 				}
-				order.addItem($data);
+				order.AddItem($data);
+
+				printCart()
+
+			})
+
+			function printCart() {
+				let data = order.getData();
+				console.log(data);
+				
+				let html = "";
+				let total = 0;
+				let sub_total = 0;
+				let discount = 0;
+				data.forEach((element, i) => {
+					discount += element.qty * element.price * 0.18;
+					sub_total += element.qty * element.price;
+					total += (element.qty * element.price);
+					html += `
+					<tr>
+							<td>${++i}</td>
+							<td>${element.name}</td>
+							<td class="text-end">${element.qty}</td>
+							<td class="text-end">${element.unit_price}</td>
+							<td>${element.discount}</td>
+							<td class="text-end">${element.qty*element.unit_price}</td>
+							<td class="no-print text-end"><button class="btn btn-sm btn-outline-danger remove-row " data-id="${element.id}">Remove</button></td>
+						</tr>`
+
+
+
+				});
+
+				$("#tbody").html(html);
+				$("#sub_total").text(sub_total);
+				$("#discount").text(discount);
+				$("#total").text(total);
+
+
+
+
+			}
+
+
+			$(document).on("click", ".remove-row", function() {
+				let id = $(this).data("id");
+				order.delItem(id);
+				printCart()
+
+			})
+
+
+			$("#order").on("click", () => {
+				let customer_id = $("#customer").val();
+				let total_amount = $("#sub_total").text();
+				let discount = $("#discount").text();
+				let net_amount = $("#total").text();
+				let products = localStorage.getData;
+
+				let data = {
+					customer_id,
+					total_amount,
+					discount,
+					net_amount,
+					products
+				}
+
+				$.ajax({
+					url: "$base_url ?>/api/order/save_order",
+					type: "POST",
+					data: {
+						data: data
+					},
+					success: function(res) {
+						let data = JSON.parse(res);
+						if (data.success) {
+							console.log(data);
+
+						}
+						order.clearItem();
+						printCart();
+						location.reload()
+
+					},
+					error: function(err) {
+						console.log(err);
+
+					}
+				})
+
 
 
 
 
 			})
+
+
 
 
 
