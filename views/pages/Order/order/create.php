@@ -31,30 +31,11 @@
 					<strong>Phone: (00) 123-456-7890 &nbsp;&nbsp;&nbsp;&nbsp; Email: info@ffarma.com</strong>
 				</address>
 			</div>
-			<!-- /.col -->
-			<!-- <div class="col-md-6 invoice-col text-end">
-				<strong>To</strong>
-				<address>
-					<strong class="text-blue fs-24"><?php
-													// echo (Customer::find($order->customer_id)->name);
-													?></strong><br>
-					<?php
-					// echo Customer::find($order->customer_id)->address
-					?><br>
-					<strong>Phone: <?php
-									// echo (Customer::find("$order->customer_id")->phone);
-									?> &nbsp;&nbsp;&nbsp;&nbsp; Email: <?php
-																		// echo (Customer::find("$order->customer_id")->email);
-																		?></strong>
-				</address>
-			</div> -->
-			<!-- /.col -->
+
 			<div class="col-sm-12 invoice-col mb-15">
 				<div class="invoice-details row no-margin">
 					<div class="col-md-6 col-lg-3"><b>Invoice </b>#0154879</div>
-					<div class="col-md-6 col-lg-3"><b>Order ID:</b>000<?php
-																		//   echo $order->id
-																		?></div>
+					<div class="col-md-6 col-lg-3"><b>Order ID:</b>000</div>
 					<div class="col-md-6 col-lg-3"><b>Payment Due:</b> 14/08/2018</div>
 					<div class="col-md-6 col-lg-3"><b>Account:</b> 00215487541296</div>
 				</div>
@@ -144,7 +125,7 @@
 			</div>
 		</div>
 	</section>
-	<script src=" <?= $base_url ?>/js/cart2.js"></script>
+	<script src="<?=$base_url?>/js/cart2.js"></script>
 	<script>
 		$(function() {
 			let order = new Cart("cart")
@@ -155,7 +136,7 @@
 				// alert(customer_id)
 
 				$.ajax({
-					url: " $base_url ?>/api/customer/find",
+					url: "<?=$base_url?>/api/customer/find",
 					type: "GET",
 					data: {
 						id: customer_id
@@ -163,7 +144,7 @@
 					success: function(res) {
 						// console.log(res);
 						let data = JSON.parse(res).customer;
-						// console.log(data.address);
+						console.log(data.address);
 
 						$(".billAddress").val(data.address);
 
@@ -252,9 +233,9 @@
 				let sub_total = 0;
 				let discount = 0;
 				data.forEach((element, i) => {
-					discount += element.qty * element.price * 0.18;
-					sub_total += element.qty * element.price;
-					total += (element.qty * element.price);
+					discount += element.qty * element.unit_price * 0.18;
+					sub_total += element.qty * element.unit_price;
+					total += (element.qty * element.unit_price);
 					html += `
 					<tr>
 							<td>${++i}</td>
@@ -294,18 +275,18 @@
 				let total_amount = $("#sub_total").text();
 				let discount = $("#discount").text();
 				let net_amount = $("#total").text();
-				let products = localStorage.getData;
+				let products = order.getData();
 
 				let data = {
-					customer_id,
-					total_amount,
-					discount,
-					net_amount,
-					products
+					customer_id:customer_id,
+					total_amount:total_amount,
+					discount:discount,
+					net_amount:net_amount,
+					products:products
 				}
 
 				$.ajax({
-					url: "$base_url ?>/api/order/save_order",
+					url: "<?=$base_url?>/api/order/save_order",
 					type: "POST",
 					data: {
 						data: data

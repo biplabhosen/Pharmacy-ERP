@@ -20,7 +20,7 @@ getData(){
    let cartitems =JSON.parse( localStorage.getItem(this.name));
    let itemExist= cartitems.find((i)=> { return  i.id == item.id });
    if (itemExist) {
-        itemExist.qty += 1
+        itemExist.qty += item.qty;
    }else{
       cartitems.push(item)
    }
