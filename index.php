@@ -74,9 +74,6 @@
 								<h2 class="text-primary">Let's Get Started</h2>
 								<p class="mb-0">Sign in to continue.</p>							
 							</div>
-							<?php
-							echo password_hash("123",PASSWORD_DEFAULT);
-							?>
 							<div class="p-40">
 								<form action="" method="post">
 									<div class="form-group">

@@ -84,6 +84,7 @@ class OrderApi
 			$stock->transection_type_id = 1;
 			$stock->werehouse_id = 2;
 			$stock->save();
+			
 		}
 
 

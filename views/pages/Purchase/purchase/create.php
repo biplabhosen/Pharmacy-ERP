@@ -4,7 +4,7 @@
 				<div class="bb-1 clearFix">
 					<div class="text-end pb-15">
 						<?php
-						echo Html::link(["class"=>"btn btn-success", "route"=>"order", "text"=>"Manage Order"]);
+						echo Html::link(["class"=>"btn btn-success", "route"=>"Purchase", "text"=>"Manage Purchase"]);
 						?>
 						<button class="btn btn-success" type="button"> <span><i class="fa-solid fa-print"></i> Save</span> </button>
 						<button id="print2" class="btn btn-warning" type="button"> <span><i class="fa-solid fa-print"></i> Print</span> </button>
@@ -13,7 +13,7 @@
 			</div>
 			<div class="col-12">
 				<div class="page-header">
-					<h2 class="d-inline"><span class="fs-30">New order</span></h2>
+					<h2 class="d-inline"><span class="fs-30">New Purchase</span></h2>
 					<div class="pull-right text-end">
 						<h3><?php
 							echo date("d M Y H:i:s", time());
@@ -49,15 +49,15 @@
 			<div class="col-sm-6">
 				<h6 class="mb-1">Bill To</h6>
 				<?php
-				echo Customer::html_select("customer");
+				echo Supplier::html_select("supplier");
 				?>
-				<textarea id="Address" class="form-control form-control-sm mt-2 billAddress" rows="2">Customer address line 1
+				<textarea id="Address" class="form-control form-control-sm mt-2 billAddress" rows="2">Supplier address line 1
             City, Country</textarea>
 			</div>
 			<div class="col-sm-6 text-sm-end">
 				<h6 class="mb-1">Ship To</h6>
-				<input id="shipTo" class="form-control form-control-sm" value="Customer Receiver (optional)">
-				<textarea id="shipAddress" class="form-control form-control-sm mt-2 billAddress" rows="2">Shipping address</textarea>
+				<input id="email" class="form-control form-control-sm" value="Supplier Email">
+				<textarea id="phone" class="form-control form-control-sm mt-2 billAddress" rows="2">Supplier Phone</textarea>
 			</div>
 		</div>
 
@@ -130,42 +130,26 @@
 	<script src="<?=$base_url?>/js/cart2.js"></script>
 	<script>
 		$(function() {
-			let order = new Cart("cart")
+			let order = new Cart("purchase")
 			printCart();
 
-			$("#customer").on("change", function() {
-				let customer_id = $(this).val();
-				// alert(customer_id)
-
-				$.ajax({
-					url: "<?=$base_url?>/api/customer/find",
-					type: "GET",
-					data: {
-						id: customer_id
-					},
-					success: function(res) {
-						// console.log(res);
-						let data = JSON.parse(res).customer;
-						console.log(data.address);
-
-						$(".billAddress").val(data.address);
-
-
-					},
-					error: function(err) {
-						console.log(err);
-
-					}
-
-
-				})
-
+			$("#supplier").on("change", function() {
+				let supplier_id = $(this).val();
+				let phone = $(this).find("option:selected").attr("data-phone");
+				let email = $(this).find("option:selected").attr("data-email");
+				let address = $(this).find("option:selected").attr("data-address");
+				// console.log(supplier_id);
+				$("#Address").val(address);
+				$("#email").val(email);
+				$("#phone").val(phone);
 
 
 			})
+
+
 			$("#medicine").on("change", function() {
 				let medicinen_price = $(this).find("option:selected").attr("data-price");
-				let price = $("#price").text(medicinen_price);
+				let price = $("#price").text(medicinen_price);				
 				$(".qty").val(1);
 				// $("#discount").val(price*.2);
 				$(".sub_total").text(medicinen_price);
@@ -174,31 +158,9 @@
 
 			$(document).on("change", ".qty", ".discount", function() {
 				let qty = parseFloat($(this).val());
-
 				let price = parseFloat($("#price").text());
-				// console.log(price, qty);
-				// let discount=parseFloat($(".discount").val()) ;
 				let sub = $(".sub_total").text(Math.round((price * qty)));
 			});
-
-			// $(".qty").on("change",()=>{
-			// 	alert(console.log($(this).val()));
-			// let subTotal=$(this).val();
-			// console.log(subTotal);
-
-			// $(".sub_total").text(subTotal);
-
-
-			// })
-
-
-			// $(document).on("change", ".tax, .discount, .qty ", function() {
-			// 	let qty = $(".qty").val()
-			// 	let discount = $(".discount").val()
-			// 	let tax = $(".tax").val()
-			// 	let price = $(".price").val();
-			// 	$(".line-total").text(Math.round((price * qty) + tax - discount));
-			// });
 
 
 			$(".add-row").on("click", () => {
@@ -273,22 +235,25 @@
 
 
 			$("#order").on("click", () => {
-				let customer_id = $("#customer").val();
+				let supplier_id = $("#supplier").val();
+				console.log(supplier_id);
+				
 				let total_amount = $("#sub_total").text();
 				let discount = $("#discount").text();
 				let net_amount = $("#total").text();
-				let products = order.getData();
-
+				let medicines = order.getData();
+				console.log(medicines);
+				
 				let data = {
-					customer_id:customer_id,
+					supplier_id:supplier_id,
 					total_amount:total_amount,
 					discount:discount,
 					net_amount:net_amount,
-					products:products
+					medicines:medicines
 				}
 
 				$.ajax({
-					url: "<?=$base_url?>/api/order/save_order",
+					url: "<?=$base_url?>/api/Purchase/savePurchase",
 					type: "POST",
 					data: {
 						data: data
