@@ -131,6 +131,7 @@ class Medicine extends Model implements JsonSerializable{
 	static function html_select($name="cmbMedicine"){
 		global $db,$tx;
 		$html="<select class='form-select' id='$name' name='$name'> ";
+		$html.="<option > Medicine name</option>";
 		$result =$db->query("select id, concat(name, ' ', strength) as name,selling_price from {$tx}medicines");
 		while($medicine=$result->fetch_object()){
 			$html.="<option data-price='$medicine->selling_price' value ='$medicine->id'>$medicine->name</option>";

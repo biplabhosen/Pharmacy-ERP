@@ -2,12 +2,16 @@
 		<div class="row">
 			<div class="col-12">
 				<div class="bb-1 clearFix">
-					<div class="text-end pb-15">
+					<div class="text-end pb-15 d-flex justify-content-between">
+						<div>
 						<?php
 						echo Html::link(["class"=>"btn btn-success", "route"=>"order", "text"=>"Manage Order"]);
 						?>
-						<button class="btn btn-success" type="button"> <span><i class="fa-solid fa-print"></i> Save</span> </button>
-						<button id="print2" class="btn btn-warning" type="button"> <span><i class="fa-solid fa-print"></i> Print</span> </button>
+						</div>
+						<div>
+							<button class="btn btn-success" type="button"> <span><i class="fa-solid fa-print"></i> Save</span> </button>
+							<button id="print2" class="btn btn-warning" type="button"> <span><i class="fa-solid fa-print"></i> Print</span> </button>
+						</div>
 					</div>
 				</div>
 			</div>

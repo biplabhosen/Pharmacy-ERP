@@ -2,12 +2,16 @@
 		<div class="row">
 			<div class="col-12">
 				<div class="bb-1 clearFix">
-					<div class="text-end pb-15">
+					<div class="text-end pb-15 d-flex justify-content-between">
+						<div>
 						<?php
 						echo Html::link(["class"=>"btn btn-success", "route"=>"Purchase", "text"=>"Manage Purchase"]);
 						?>
-						<button class="btn btn-success" type="button"> <span><i class="fa-solid fa-print"></i> Save</span> </button>
-						<button id="print2" class="btn btn-warning" type="button"> <span><i class="fa-solid fa-print"></i> Print</span> </button>
+						</div>
+						<div>
+							<button class="btn btn-success" type="button"> <span><i class="fa-solid fa-print"></i> Save</span> </button>
+							<button id="print2" class="btn btn-warning" type="button"> <span><i class="fa-solid fa-print"></i> Print</span> </button>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -66,8 +70,8 @@
 		<div class="row">
 			<div class="col-12 table-responsive">
 				<table class="table table-bordered">
-					<thead>
-						<tr>
+					<thead >
+						<tr class="invoice-details">
 							<th>#</th>
 							<th>Description</th>
 							<th class="text-end">Quantity</th>
@@ -85,10 +89,10 @@
 							</th class="no-print">
 
 							<th class="no-print text-end">
-								<input type="number" min="1" step="" class=" qty form-control form-control-md" value="1">
+								<input type="number" min="1" step="" class=" qty form-control form-control-sm" value="1">
 							</th>
 							<th class="no-print text-end" id="price">0.00</th>
-							<th id="strength"><input type="number" class="discount form-control form-control-sm" value="0">
+							<th id="strength"><input type="number" class="discount form-control form-control-sm " value="0">
 							</th>
 							<th class="no-print text-end sub_total">0.00</th>
 							<td class="no-print text-end"><button class="btn btn-md btn-success  add-row">Add</button></td>
