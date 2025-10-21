@@ -1,6 +1,8 @@
-<?php
-print_r($data)
-?>
+<h3>All Categories</h3>
+<button class="btn-success p-2 mb-3 border-0 rounded-2">
+  
+  <a href="<?=$base_url?>/category/add" class="btn-success p-2 rounded-2">Add Category</a>
+  </button>
 <table class="table ">
   <thead class="bg-success">
     <tr>

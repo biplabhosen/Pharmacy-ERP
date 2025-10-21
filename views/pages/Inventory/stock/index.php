@@ -1,7 +1,10 @@
-<div class="box">
+<div class="box  printableArea">
     <div class="box-body">
-        
-        <h3 class="box-title">Stock Report</h3>
+        <div class="d-flex justify-content-between">
+          <!-- <button class="btn btn-primary no-print" onclick="window.print()">Print</button> -->
+          <h3 class="box-title">Stock Report</h3>
+          <button id="print2" class="btn btn-warning"  type="button"> <span><i class="fa-solid fa-print"></i> Print</span> </button>
+        </div>
         <form class="form" action="<?=$base_url?>/stock" method="post">
 							<div class="box-body">
 								<h4 class="box-title text-info mb-3">Filter by Date</h4>
@@ -9,31 +12,24 @@
 								  <div class="col-md-6">
 									<div class="form-group">
 									  <label class="form-label">From</label>
-									  <input type="date" name="from" class="form-control">
+									  <input type="date" name="from" class="form-control" value="<?=$stock->str?>">
 									</div>
 								  </div>
 								  <div class="col-md-6">
 									<div class="form-group">
 									  <label class="form-label">To</label>
-									  <input type="date" name="to" class="form-control">
+									  <input type="date" name="to"  class="form-control " value="<?=$stock->str?>">
 									</div>
 								  </div>
 								</div>
 							
 							<div class="mb-3">
-								<button type="submit" class="btn btn-primary ">
+								<button type="submit" name="submit" class="btn btn-primary ">
 								  <i class="ti-save-alt"></i> Search
 								</button>
 							</div>  
 						</form>
         <div class="table-responsive">
-            <!-- <form action="<?=$base_url?>/stock" method="post">
-  <label for="">From</label>
-  <input type="date" class="form-control form-control-sm"  name="from">
-  <label for="">To</label>
-  <input type="date" class="form-control form-control-sm" name="to">
-  <button type="submit" name="btn_submit">Submit</button>
-</form> -->
             <table class="table">
                 <thead class="bg-success">
                     <tr>
@@ -44,9 +40,9 @@
                 </thead>
                 <tbody>
                     <?php
-                    foreach ($stock as $key => $value) {
+                    foreach ($stock->stock_report as $key => $value) {
                         echo "<tr>
-                        <td>{$key}</td>
+                        <td>".($key+1)."</td>
                         <td>$value->medicine</td>
                         <td>$value->qty</td>
                     </tr>";

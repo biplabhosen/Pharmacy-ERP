@@ -152,7 +152,7 @@
 
 
 			$("#medicine").on("change", function() {
-				let medicinen_price = $(this).find("option:selected").attr("data-price");
+				let medicinen_price = $(this).find("option:selected").attr("data-purchase");
 				let price = $("#price").text(medicinen_price);				
 				$(".qty").val(1);
 				// $("#discount").val(price*.2);

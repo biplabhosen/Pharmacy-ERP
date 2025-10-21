@@ -3,15 +3,17 @@ class StockController extends Controller{
 	public function __construct(){
 	}
 	public function index(){
-		$str=$_POST['from'];
-		$end=$_POST['to'];
+		
+		$str=$_POST['from']?? "";
+		$end=$_POST['to']?? "";
 		if ($str!="" && $end!="") {
 			$stock_report=Stock::stock_report_date($str,$end);
 		} else {
 			$stock_report=Stock::stock_report();
 		}
-		
+		$stock_report= ["stock_report"=>$stock_report, "str"=>$str,"end"=>$end ];
 		view("Inventory",$stock_report);
+		
 	}
 	public function create(){
 		view("Inventory");

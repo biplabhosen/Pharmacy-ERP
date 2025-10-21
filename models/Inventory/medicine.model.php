@@ -132,9 +132,9 @@ class Medicine extends Model implements JsonSerializable{
 		global $db,$tx;
 		$html="<select class='form-select' id='$name' name='$name'> ";
 		$html.="<option > Medicine name</option>";
-		$result =$db->query("select id, concat(name, ' ', strength) as name,selling_price from {$tx}medicines");
+		$result =$db->query("select id, concat(name, ' ', strength) as name,purchase_price,selling_price from {$tx}medicines");
 		while($medicine=$result->fetch_object()){
-			$html.="<option data-price='$medicine->selling_price' value ='$medicine->id'>$medicine->name</option>";
+			$html.="<option data-price='$medicine->selling_price' data-purchase='$medicine->purchase_price' value ='$medicine->id'>$medicine->name</option>";
 		}
 		$html.="</select>";
 		return $html;
@@ -150,9 +150,9 @@ class Medicine extends Model implements JsonSerializable{
 		$html="<table class='table'>";
 			$html.="<tr><th colspan='3'>".Html::link(["class"=>"btn btn-success","route"=>"medicine/create","text"=>"New Medicine"])."</th></tr>";
 		if($action){
-			$html.="<tr><th>Id</th><th>Name</th><th>Generic Name</th><th>Img</th><th>Category Id</th><th>Manufacturer Id</th><th>Strength</th><th>Unit</th><th>Batch Number</th><th>Expiry Date</th><th>Purchase Price</th><th>Selling Price</th><th>Created At</th><th>Updated At</th><th>Action</th></tr>";
+			$html.="<tr><th>Id</th><th>Name</th><th>Generic Name</th><th>Img</th><th>Category Id</th><th>Manufacturer Id</th><th>Strength</th><th>Unit</th><th>Batch Number</th><th>Expiry Date</th><th>Purchase Price</th><th>Selling Price</th><th>Action</th></tr>";
 		}else{
-			$html.="<tr><th>Id</th><th>Name</th><th>Generic Name</th><th>Img</th><th>Category Id</th><th>Manufacturer Id</th><th>Strength</th><th>Unit</th><th>Batch Number</th><th>Expiry Date</th><th>Purchase Price</th><th>Selling Price</th><th>Created At</th><th>Updated At</th></tr>";
+			$html.="<tr><th>Id</th><th>Name</th><th>Generic Name</th><th>Img</th><th>Category Id</th><th>Manufacturer Id</th><th>Strength</th><th>Unit</th><th>Batch Number</th><th>Expiry Date</th><th>Purchase Price</th><th>Selling Price</th></tr>";
 		}
 		while($medicine=$result->fetch_object()){
 			$action_buttons = "";
@@ -163,7 +163,7 @@ class Medicine extends Model implements JsonSerializable{
 				$action_buttons.= Event::button(["name"=>"delete", "value"=>"Delete", "class"=>"btn btn-danger", "route"=>"medicine/confirm/$medicine->id"]);
 				$action_buttons.= "</div></td>";
 			}
-			$html.="<tr><td>$medicine->id</td><td>$medicine->name</td><td>$medicine->generic_name</td><td>$medicine->img</td><td>$medicine->category_id</td><td>$medicine->manufacturer_id</td><td>$medicine->strength</td><td>$medicine->unit</td><td>$medicine->batch_number</td><td>$medicine->expiry_date</td><td>$medicine->purchase_price</td><td>$medicine->selling_price</td><td>$medicine->created_at</td><td>$medicine->updated_at</td> $action_buttons</tr>";
+			$html.="<tr><td>$medicine->id</td><td>$medicine->name</td><td>$medicine->generic_name</td><td>$medicine->img</td><td>$medicine->category_id</td><td>$medicine->manufacturer_id</td><td>$medicine->strength</td><td>$medicine->unit</td><td>$medicine->batch_number</td><td>$medicine->expiry_date</td><td>$medicine->purchase_price</td><td>$medicine->selling_price</td> $action_buttons</tr>";
 		}
 		$html.="</table>";
 		$html.= pagination($page,$total_pages);
