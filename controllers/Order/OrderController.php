@@ -36,6 +36,7 @@ public function save($data,$file){
 
 */
 		if(count($errors)==0){
+			global $now;
 			$order=new Order();
 		$order->sale_date=date("Y-m-d",strtotime($data["sale_date"]));
 		$order->customer_id=$data["customer_id"];
@@ -86,6 +87,7 @@ public function update($data,$file){
 
 */
 		if(count($errors)==0){
+			global $now;
 			$order=new Order();
 			$order->id=$data["id"];
 		$order->sale_date=date("Y-m-d",strtotime($data["sale_date"]));

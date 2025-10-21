@@ -33,7 +33,7 @@ class Stock extends Model implements JsonSerializable{
 		global $db,$tx;
 		$db->query("delete from {$tx}stocks where id={$id}");
 	}
-	public function jsonSerialize(){
+	public function jsonSerialize():mixed{
 		return get_object_vars($this);
 	}
 	public static function all(){
@@ -72,6 +72,24 @@ class Stock extends Model implements JsonSerializable{
 		$result =$db->query("select max(id) last_id from {$tx}stocks");
 		$stock =$result->fetch_object();
 		return $stock->last_id;
+	}
+	static function stock_report(){
+		global $db,$tx;
+		$result =$db->query("SELECT s.id,m.name medicine,sum(s.qty) qty FROM {$tx}stocks s, {$tx}medicines m where m.id = s.medicines_id  GROUP by medicines_id");
+		$data=[];
+		while($stock=$result->fetch_object()){
+			$data[]=$stock;
+		}
+			return $data;
+	}
+	static function stock_report_date($from,$to){
+		global $db,$tx;
+		$result =$db->query("SELECT s.id,m.name medicine,sum(s.qty) qty FROM {$tx}stocks s, {$tx}medicines m where m.id = s.medicines_id and  date(s.updated_at) BETWEEN '$from' and '$to' GROUP by medicines_id");
+		$data=[];
+		while($stock=$result->fetch_object()){
+			$data[]=$stock;
+		}
+			return $data;
 	}
 	public function json(){
 		return json_encode($this);

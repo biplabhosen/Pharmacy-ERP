@@ -64,6 +64,8 @@ class OrderApi
 		$order->discount = $data["discount"];
 		$order->net_amount = $data["net_amount"];
 		$order->delivery_date = date("Y-m-d", strtotime('+3 days'));
+		$order->created_at=$now;
+		$order->updated_at=$now;
 	
 
 		$last_id = $order->save();
@@ -76,6 +78,8 @@ class OrderApi
 			$ordersdetail->medicine_id = $data["id"];
 			$ordersdetail->qty = $data["qty"];
 			$ordersdetail->unit_price = $data["unit_price"];
+			$ordersdetail->created_at = $now;
+			$ordersdetail->updated_at = $now;
 			$ordersdetail->save();
 
 			$stock = new Stock();
@@ -83,6 +87,8 @@ class OrderApi
 			$stock->qty = $data["qty"]*-1;
 			$stock->transection_type_id = 1;
 			$stock->werehouse_id = 2;
+			$stock->created_at=$now;
+			$stock->updated_at=$now;
 			$stock->save();
 			
 		}
