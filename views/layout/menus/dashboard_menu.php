@@ -1,19 +1,20 @@
-      <li class="treeview">
-				  <a href="#">
+      <li >
+				  <a href="<?=$base_url?>/home ">
 					<i data-feather="monitor"></i>
 					<span>Dashboard</span>
-					<span class="pull-right-container">
+					<!-- <span class="pull-right-container">
 					  <i class="feather-chevron-right"></i>
-					</span>
+					</span> -->
 				  </a>
-				  <ul class="treeview-menu">
+				  <!-- <ul class="treeview-menu">
 					<li><a href="<?=$base_url?>/home "><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>Dashboard 1</a></li>
 					<li><a href="<?=$base_url?>/home "><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>Dashboard 2 <span class="bg-danger fs-10 px-1 rounded">NEW</span></a></li>
-				  </ul>
+				  </ul> -->
 				</li>
 				<?php include "product_menu.php"?>
 				<li title="Dashboard"><a href="<?=$base_url?>/sales"><i data-feather="bar-chart-2"></i><span>Sales <span class="bg-danger fs-10 px-1 rounded">NEW</span> </span></a></li>
 				<?php include "order_menu1.php"?>
+				<li title="Dashboard"><a href="<?=$base_url?>/purchase"><i data-feather="bar-chart-2"></i><span>Purchase </span></a></li>
 				<?php include "payment_menu.php"?>
 				<li class="header">Apps & Pages </li>
 				<li title="Support"><a href="extra_app_ticket.html"><i data-feather="message-circle"></i><span>Support</span></a></li>

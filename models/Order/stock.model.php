@@ -67,6 +67,12 @@ class Stock extends Model implements JsonSerializable{
 		$stock=$result->fetch_object();
 			return $stock;
 	}
+	public static function stock(){
+		global $db,$tx;
+		$result =$db->query("SELECT SUM(qty) qty FROM {$tx}stocks ");
+		$stock=$result->fetch_object();
+			return $stock;
+	}
 	static function get_last_id(){
 		global $db,$tx;
 		$result =$db->query("select max(id) last_id from {$tx}stocks");
@@ -75,7 +81,7 @@ class Stock extends Model implements JsonSerializable{
 	}
 	static function stock_report(){
 		global $db,$tx;
-		$result =$db->query("SELECT s.id,m.name medicine,sum(s.qty) qty FROM {$tx}stocks s, {$tx}medicines m where m.id = s.medicines_id  GROUP by medicines_id");
+		$result =$db->query("SELECT s.id,concat(name, ' ', strength) medicine,s.medicines_id,sum(s.qty) qty FROM {$tx}stocks s, {$tx}medicines m where m.id = s.medicines_id  GROUP by medicines_id");
 		$data=[];
 		while($stock=$result->fetch_object()){
 			$data[]=$stock;
@@ -84,12 +90,36 @@ class Stock extends Model implements JsonSerializable{
 	}
 	static function stock_report_date($from,$to){
 		global $db,$tx;
-		$result =$db->query("SELECT s.id,m.name medicine,sum(s.qty) qty FROM {$tx}stocks s, {$tx}medicines m where m.id = s.medicines_id and  date(s.updated_at) BETWEEN '$from' and '$to' GROUP by medicines_id");
+		$result =$db->query("SELECT s.id,m.name medicine,s.medicines_id,sum(s.qty) qty FROM {$tx}stocks s, {$tx}medicines m where m.id = s.medicines_id and  date(s.updated_at) BETWEEN '$from' and '$to' GROUP by medicines_id");
 		$data=[];
 		while($stock=$result->fetch_object()){
 			$data[]=$stock;
 		}
 			return $data;
+	}
+	public static function low_stock(){
+		global $db,$tx;
+		$result =$db->query("SELECT COUNT(*) AS low_stock_count
+		FROM (
+			SELECT medicines_id
+			FROM core_stocks
+			GROUP BY medicines_id
+			HAVING SUM(qty) <= 10
+		) AS stock_summary;");
+		$stock=$result->fetch_object();
+			return $stock;
+	}
+	public static function stock_out(){
+		global $db,$tx;
+		$result =$db->query("SELECT COUNT(*) AS stock_out_count
+		FROM (
+			SELECT medicines_id
+			FROM core_stocks
+			GROUP BY medicines_id
+			HAVING SUM(qty) <= 0
+		) AS stock_summary;");
+		$stock=$result->fetch_object();
+			return $stock;
 	}
 	public function json(){
 		return json_encode($this);

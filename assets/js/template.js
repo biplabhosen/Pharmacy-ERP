@@ -1166,7 +1166,8 @@ $('.demo-panel-bx').slimScroll({
   'use strict'
 	
 // Dynamic active menu
-    var path = window.location.pathname.split("https://coup-admin-dashboard-template.multipurposethemes.com/").pop();
+// https://coup-admin-dashboard-template.multipurposethemes.com/
+    var path = window.location.pathname.split("").pop();
     var target = $('.sidebar-menu li a[href="'+path+'"]');
     target.parent().addClass('active');
     $('.sidebar-menu li.active').parents('li').addClass('active');
@@ -1178,7 +1179,8 @@ $('.demo-panel-bx').slimScroll({
   'use strict'
 	
 // Dynamic active horizontal menu
-    var path = window.location.pathname.split("https://coup-admin-dashboard-template.multipurposethemes.com/").pop();
+// https://coup-admin-dashboard-template.multipurposethemes.com/
+    var path = window.location.pathname.split("").pop();
     var target = $('.sm li a[href="'+path+'"]');
     target.parent().addClass('current');
     $('.sm li.current').parents('li').addClass('current');

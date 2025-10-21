@@ -7,7 +7,7 @@
 									<div class="me-10 bg-primary-light w-50 h-50 rounded-circle text-center p-0 align-content-center"><i class="feather-users fs-22"></i></div>
 									<div class="mt-15">
 										<p class="m-0 fw-600">Total Customers</p>
-										<h1 class="my-1 fw-500">50,000</h1>
+										<h1 class="my-1 fw-500"><?=Customer::count()?></h1>
 										<span class="text-success fw-500"><span class="feather-arrow-up"></span> + 5.5% Since Last Week</span>
 									</div>
 								</div>
@@ -19,7 +19,7 @@
 									<div class="me-10 bg-success-light w-50 h-50 rounded-circle text-center p-0 align-content-center"><i class="feather-box fs-22"></i></div>
 									<div class="mt-15">
 										<p class="m-0 fw-600">Completed Orders</p>
-										<h1 class="my-1 fw-500">20,000</h1>
+										<h1 class="my-1 fw-500"><?=Order::count()?></h1>
 										<span class="text-success fw-500"><span class="feather-arrow-up"></span> + 4.1% Since Last Week</span>
 									</div>
 								</div>
@@ -28,10 +28,10 @@
 						<div class="col-xxl-6 col-xl-3 col-md-6 col-12">
 							<div class="box rounded-4">
 								<div class="box-body">
-									<div class="me-10 bg-warning-light w-50 h-50 rounded-circle text-center p-0 align-content-center"><i class="feather-pause-circle fs-22"></i></div>
+									<div class="me-10 bg-warning-light w-50 h-50 rounded-circle text-center p-0 align-content-center"><img src="<?=$base_url?>/assets/images/svg-icon/medical/antibiotic.png"></div>
 									<div class="mt-15">
-										<p class="m-0 fw-600">Pending Orders</p>
-										<h1 class="my-1 fw-500">500</h1>
+										<p class="m-0 fw-600">Total Medicine</p>
+										<h1 class="my-1 fw-500"><?=Stock::stock()->qty?></h1>
 										<span class="text-success fw-500"><span class="feather-arrow-up"></span> + 3% Since Last Week</span>
 									</div>
 								</div>

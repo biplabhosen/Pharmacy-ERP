@@ -116,10 +116,5 @@
 			</div>
 			<!-- /.col -->
 		  </div>
-		  <div class="row no-print">
-			<div class="col-12">
-			  <button type="button" class="btn btn-success pull-right"><i class="fa fa-credit-card"></i> Submit Payment
-			  </button>
-			</div>
-		  </div>
+		 
 		</section>

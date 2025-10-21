@@ -60,7 +60,7 @@ class PurchaseApi{
 		$purchasedetail->quantity=$data["qty"];
 		$purchasedetail->unit_price = $data["unit_price"];
 		$purchasedetail->subtotal = $data["unit_price"]*$data["qty"];
-		$purchasedetail->expiry_date=date("Y-m-d", strtotime('+3 years'));
+		$purchasedetail->expiry_date=$data["unit_price"];
 		$purchasedetail->batch_number="batch_number";
 		$purchasedetail->created_at=$now;
 		$purchasedetail->updated_at=$now;

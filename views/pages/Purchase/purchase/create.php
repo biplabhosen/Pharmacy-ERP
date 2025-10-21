@@ -76,7 +76,7 @@
 							<th>Description</th>
 							<th class="text-end">Quantity</th>
 							<th class="text-end">Unit Cost</th>
-							<th>Discout</th>
+							<th>Expity Date</th>
 							<th class="text-end">Subtotal</th>
 							<th class="text-end">Action</th>
 						</tr>
@@ -92,7 +92,7 @@
 								<input type="number" min="1" step="" class=" qty form-control form-control-sm" value="1">
 							</th>
 							<th class="no-print text-end" id="price">0.00</th>
-							<th id="strength"><input type="number" class="discount form-control form-control-sm " value="0">
+							<th id="strength"><input type="date" class="expity_date form-control form-control-sm " value="0">
 							</th>
 							<th class="no-print text-end sub_total">0.00</th>
 							<td class="no-print text-end"><button class="btn btn-md btn-success  add-row">Add</button></td>
@@ -160,7 +160,7 @@
 
 			})
 
-			$(document).on("change", ".qty", ".discount", function() {
+			$(document).on("change", ".qty", function() {
 				let qty = parseFloat($(this).val());
 				let price = parseFloat($("#price").text());
 				let sub = $(".sub_total").text(Math.round((price * qty)));
@@ -174,7 +174,7 @@
 				// console.log(qty);
 
 				let price = parseFloat($("#price").text());
-				let discount = parseFloat($(".discount").val());
+				let expity_date = $(".expity_date").val();
 				let sub_total = parseFloat($(".sub_total").text());
 
 				console.log(medicine_id, medicine_name, qty, price, sub_total);
@@ -183,7 +183,7 @@
 					name: medicine_name,
 					qty: qty,
 					unit_price: price,
-					discount: discount,
+					expity_date: expity_date,
 					sub_total: sub_total
 				}
 				order.AddItem($data);
@@ -199,9 +199,9 @@
 				let html = "";
 				let total = 0;
 				let sub_total = 0;
-				let discount = 0;
+				// let discount = 0;
 				data.forEach((element, i) => {
-					discount += element.qty * element.unit_price * 0.18;
+					// discount += element.qty * element.unit_price * 0.18;
 					sub_total += element.qty * element.unit_price;
 					total += (element.qty * element.unit_price);
 					html += `
@@ -210,7 +210,7 @@
 							<td>${element.name}</td>
 							<td class="text-end">${element.qty}</td>
 							<td class="text-end">${element.unit_price}</td>
-							<td>${element.discount}</td>
+							<td>${element.expity_date}</td>
 							<td class="text-end">${element.qty*element.unit_price}</td>
 							<td class="no-print text-end"><button class="btn btn-sm btn-outline-danger remove-row " data-id="${element.id}">Remove</button></td>
 						</tr>`
