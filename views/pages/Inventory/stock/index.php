@@ -6,7 +6,7 @@
 								<div class="d-flex align-items-center">
 									<div class="me-10 bg-secondary-light w-50 h-50 rounded-circle text-center p-0 align-content-center"><i class="feather-box fs-22"></i></div>
 									<div>
-										<p class="m-0 fw-600">Total Medicine</p>
+										<p class="m-0 fw-600">Total Stock</p>
 										<h1 class="m-0 fw-500"><?=Stock::stock()->qty?></h1>
 									</div>
 								</div>
@@ -377,7 +377,6 @@
                               <tr>
                                   <th>#</th>
                                   <th>Medicine Name</th>
-                                  <th>Medicine ID</th>
                                   <th>Quantity</th>
                               </tr>
                           </thead>
@@ -387,7 +386,6 @@
                                   echo "<tr>
                                   <td>".($key+1)."</td>
                                   <td>$value->medicine</td>
-                                  <td>$value->medicines_id</td>
                                   <td>$value->qty</td>
                               </tr>";
                               }

@@ -8,12 +8,12 @@ class CategoryController{
 
     function index(){
         $data=Category::getAll();
-        view("inventory",$data);
+        view("Inventory",$data);
     }
 
 
     function add(){
-        view("inventory");
+        view("Inventory");
     }
 
     function save($data){
@@ -34,7 +34,7 @@ class CategoryController{
     
     static function edit($id){
         $category=Category::find($id);
-        view("inventory",$category);
+        view("Inventory",$category);
 
     }
 

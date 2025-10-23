@@ -5,7 +5,7 @@
 					<div class="text-end pb-15 d-flex justify-content-between">
 						<div>
 						<?php
-						echo Html::link(["class"=>"btn btn-success", "route"=>"Purchase", "text"=>"Manage Purchase"]);
+						echo Html::link(["class"=>"btn btn-success", "route"=>"purchase", "text"=>"Manage Purchase"]);
 						?>
 						</div>
 						<div>
@@ -76,7 +76,7 @@
 							<th>Description</th>
 							<th class="text-end">Quantity</th>
 							<th class="text-end">Unit Cost</th>
-							<th>Expity Date</th>
+							<th>Expiry Date</th>
 							<th class="text-end">Subtotal</th>
 							<th class="text-end">Action</th>
 						</tr>

@@ -31,7 +31,7 @@
 									<div class="me-10 bg-warning-light w-50 h-50 rounded-circle text-center p-0 align-content-center"><img src="<?=$base_url?>/assets/images/svg-icon/medical/antibiotic.png"></div>
 									<div class="mt-15">
 										<p class="m-0 fw-600">Total Medicine</p>
-										<h1 class="my-1 fw-500"><?=Stock::stock()->qty?></h1>
+										<h1 class="my-1 fw-500"><?=Medicine::count()?></h1>
 										<span class="text-success fw-500"><span class="feather-arrow-up"></span> + 3% Since Last Week</span>
 									</div>
 								</div>
