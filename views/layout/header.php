@@ -42,7 +42,7 @@
   <header class="main-header">
 	<div class="d-flex align-items-center logo-box justify-content-start">	
 		<!-- Logo -->
-		<a href="index.html" class="logo">
+		<a href="<?=$base_url?>" class="logo">
 		  <!-- logo-->
 		  <div class="logo-mini w-30">
 			  <span class="light-logo"><img src="<?=$base_url?>/assets/images/logo-letter.png" alt="logo"></span>

@@ -85,11 +85,13 @@ class OrderApi
 			$stock = new Stock();
 			$stock->medicines_id = $data["id"];
 			$stock->qty = $data["qty"]*-1;
-			$stock->transection_type_id = 1;
+			$stock->transection_type_id = 2;
+			$stock->reference_id=$last_id;
 			$stock->werehouse_id = 2;
 			$stock->created_at=$now;
 			$stock->updated_at=$now;
-			$stock->save();
+			// $stock->save();
+			$stock->sellMedicine();
 			
 		}
 

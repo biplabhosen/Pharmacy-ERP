@@ -42,7 +42,7 @@
 					<div class="media-list media-list-hover mt-20">
 			<div class="media py-10 px-0">
 				<a class="avatar avatar-lg status-success" href="#">
-				<img src="<?=$base_url?>/assets/images/avatar/1.html" alt="...">
+				<img src="" alt="...">
 				</a>
 				<div class="media-body">
 				<p class="fs-16">
@@ -55,7 +55,7 @@
 
 			<div class="media py-10 px-0">
 				<a class="avatar avatar-lg status-danger" href="#">
-				<img src="<?=$base_url?>/assets/images/avatar/2.html" alt="...">
+				<img src="" alt="...">
 				</a>
 				<div class="media-body">
 				<p class="fs-16">
@@ -68,7 +68,7 @@
 
 			<div class="media py-10 px-0">
 				<a class="avatar avatar-lg status-warning" href="#">
-				<img src="<?=$base_url?>/assets/images/avatar/3.html" alt="...">
+				<img src="" alt="...">
 				</a>
 				<div class="media-body">
 				<p class="fs-16">
@@ -81,7 +81,7 @@
 
 			<div class="media py-10 px-0">
 				<a class="avatar avatar-lg status-primary" href="#">
-				<img src="<?=$base_url?>/assets/images/avatar/4.html" alt="...">
+				<img src="" alt="...">
 				</a>
 				<div class="media-body">
 				<p class="fs-16">
@@ -94,7 +94,7 @@
 			
 			<div class="media py-10 px-0">
 				<a class="avatar avatar-lg status-success" href="#">
-				<img src="<?=$base_url?>/assets/images/avatar/1.html" alt="...">
+				<img src="" alt="...">
 				</a>
 				<div class="media-body">
 				<p class="fs-16">
@@ -107,7 +107,7 @@
 
 			<div class="media py-10 px-0">
 				<a class="avatar avatar-lg status-danger" href="#">
-				<img src="<?=$base_url?>/assets/images/avatar/2.html" alt="...">
+				<img src="" alt="...">
 				</a>
 				<div class="media-body">
 				<p class="fs-16">
@@ -120,7 +120,7 @@
 
 			<div class="media py-10 px-0">
 				<a class="avatar avatar-lg status-warning" href="#">
-				<img src="<?=$base_url?>/assets/images/avatar/3.html" alt="...">
+				<img src="" alt="...">
 				</a>
 				<div class="media-body">
 				<p class="fs-16">
@@ -133,7 +133,7 @@
 
 			<div class="media py-10 px-0">
 				<a class="avatar avatar-lg status-primary" href="#">
-				<img src="<?=$base_url?>/assets/images/avatar/4.html" alt="...">
+				<img src="" alt="...">
 				</a>
 				<div class="media-body">
 				<p class="fs-16">

@@ -60,7 +60,6 @@ class PurchaseApi{
 		$purchasedetail->quantity=$data["qty"];
 		$purchasedetail->unit_price = $data["unit_price"];
 		$purchasedetail->subtotal = $data["unit_price"]*$data["qty"];
-		$purchasedetail->expiry_date=$data["unit_price"];
 		$purchasedetail->batch_number="batch_number";
 		$purchasedetail->created_at=$now;
 		$purchasedetail->updated_at=$now;
@@ -69,8 +68,10 @@ class PurchaseApi{
 		$stock=new Stock();
 		$stock->medicines_id=$data["id"];
 		$stock->qty=$data["qty"];
-		$stock->transection_type_id=2;
+		$stock->transection_type_id=1;
+		$stock->reference_id=$purchase_id;
 		$stock->werehouse_id=2;
+		$stock->expiry_date=$data["expity_date"];
 		$stock->created_at=$now;
 		$stock->updated_at=$now;
 

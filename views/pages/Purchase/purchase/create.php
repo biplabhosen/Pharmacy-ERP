@@ -92,7 +92,7 @@
 								<input type="number" min="1" step="" class=" qty form-control form-control-sm" value="1">
 							</th>
 							<th class="no-print text-end" id="price">0.00</th>
-							<th id="strength"><input type="date" class="expity_date form-control form-control-sm " value="0">
+							<th id="strength"><input type="date" class="expity_date form-control form-control-sm " value="">
 							</th>
 							<th class="no-print text-end sub_total">0.00</th>
 							<td class="no-print text-end"><button class="btn btn-md btn-success  add-row">Add</button></td>

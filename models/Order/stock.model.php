@@ -4,7 +4,9 @@ class Stock extends Model implements JsonSerializable{
 	public $medicines_id;
 	public $qty;
 	public $transection_type_id;
+	public $reference_id;
 	public $werehouse_id;
+	public $expiry_date;
 	public $created_at;
 	public $updated_at;
 
@@ -20,9 +22,64 @@ class Stock extends Model implements JsonSerializable{
 		$this->updated_at=$updated_at;
 
 	}
+	function sellMedicine() {
+    global $db;
+
+    // Start a database transaction (to prevent partial updates)
+    $db->begin_transaction();
+
+    try {
+        // 1️⃣ Find valid (non-expired) purchased stock, FIFO order
+        $sql = "SELECT id, qty, expiry_date 
+                FROM core_stocks 
+                WHERE medicines_id = '$this->medicines_id'
+                  AND transection_type_id = 1 -- purchase
+                  AND qty > 0 
+                  AND (expiry_date IS NULL OR expiry_date >= CURDATE())
+                ORDER BY expiry_date ASC, created_at ASC";
+
+        $result = $db->query($sql);
+
+        $remaining = $this->qty;
+
+        // 2️⃣ Loop through stock batches (FIFO)
+        while ($row = $result->fetch_assoc()) {
+            if ($remaining <= 0) break;
+
+            $deduct = min($row['qty'], $remaining);
+            $remaining -= $deduct;
+
+            // 3️⃣ Decrease stock from purchase batch
+            $update = "UPDATE core_stocks 
+                       SET qty = qty - $deduct 
+                       WHERE id = {$row['id']}";
+            $db->query($update);
+
+            // 4️⃣ Log the sale (negative stock)
+            $insertSale = "INSERT INTO core_stocks 
+                           (medicines_id, qty, transection_type_id, reference_id, expiry_date)
+                           VALUES ('$this->medicines_id', -$deduct, 2, '$this->reference_id', '{$row['expiry_date']}')";
+            $db->query($insertSale);
+        }
+
+        // 5️⃣ If stock not enough
+        if ($remaining > 0) {
+            $db->rollback();
+            echo "<script>alert('Not enough non-expired stock available!');</script>";
+        } else {
+            $db->commit();
+            // echo "<script>alert('Sale processed successfully!');</script>";
+        }
+
+    } catch (Exception $e) {
+        $db->rollback();
+        echo "Error: " . $e->getMessage();
+    }
+}
+
 	public function save(){
 		global $db,$tx;
-		$db->query("insert into {$tx}stocks(medicines_id,qty,transection_type_id,werehouse_id,created_at,updated_at)values('$this->medicines_id','$this->qty','$this->transection_type_id','$this->werehouse_id','$this->created_at','$this->updated_at')");
+		$db->query("insert into {$tx}stocks(medicines_id,qty,transection_type_id,reference_id,werehouse_id,expiry_date,created_at,updated_at)values('$this->medicines_id','$this->qty','$this->transection_type_id','$this->reference_id','$this->werehouse_id','$this->expiry_date','$this->created_at','$this->updated_at')");
 		return $db->insert_id;
 	}
 	public function update(){
@@ -69,7 +126,7 @@ class Stock extends Model implements JsonSerializable{
 	}
 	public static function stock(){
 		global $db,$tx;
-		$result =$db->query("SELECT SUM(qty) qty FROM {$tx}stocks ");
+		$result =$db->query("SELECT SUM(qty) qty FROM {$tx}stocks  ");
 		$stock=$result->fetch_object();
 			return $stock;
 	}
