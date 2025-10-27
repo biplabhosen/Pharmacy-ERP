@@ -4,9 +4,9 @@
 				<div class="bb-1 clearFix">
 					<div class="text-end pb-15 d-flex justify-content-between">
 						<div>
-						<?php
-						echo Html::link(["class"=>"btn btn-success", "route"=>"order", "text"=>"Manage Order"]);
-						?>
+							<?php
+							echo Html::link(["class" => "btn btn-success", "route" => "order", "text" => "Manage Order"]);
+							?>
 						</div>
 						<div>
 							<button class="btn btn-success" type="button"> <span><i class="fa-solid fa-print"></i> Save</span> </button>
@@ -65,6 +65,7 @@
 			</div>
 		</div>
 
+		<div id="alert-box"></div>
 
 
 		<div class="row">
@@ -131,7 +132,7 @@
 			</div>
 		</div>
 	</section>
-	<script src="<?=$base_url?>/js/cart2.js"></script>
+	<script src="<?= $base_url ?>/js/cart2.js"></script>
 	<script>
 		$(function() {
 			let order = new Cart("cart")
@@ -142,7 +143,7 @@
 				// alert(customer_id)
 
 				$.ajax({
-					url: "<?=$base_url?>/api/customer/find",
+					url: "<?= $base_url ?>/api/customer/find",
 					type: "GET",
 					data: {
 						id: customer_id
@@ -233,7 +234,7 @@
 			function printCart() {
 				let data = order.getData();
 				console.log(data);
-				
+
 				let html = "";
 				let total = 0;
 				let sub_total = 0;
@@ -284,28 +285,44 @@
 				let products = order.getData();
 
 				let data = {
-					customer_id:customer_id,
-					total_amount:total_amount,
-					discount:discount,
-					net_amount:net_amount,
-					products:products
+					customer_id: customer_id,
+					total_amount: total_amount,
+					discount: discount,
+					net_amount: net_amount,
+					products: products
 				}
 
 				$.ajax({
-					url: "<?=$base_url?>/api/order/save_order",
+					url: "<?= $base_url ?>/api/order/save_order",
 					type: "POST",
 					data: {
 						data: data
 					},
 					success: function(res) {
-						let data = JSON.parse(res);
-						if (data.message) {
-							console.log(data.message);
-
+						let result = JSON.parse(res);
+						// Detect message type based on response
+						let alertType = "info"; // default color (blue)
+						if (result.success === true) {
+							alertType = "success"; // green
+						} else if (result.success === false) {
+							alertType = "danger"; // red
+						} else if (result.warning) {
+							alertType = "warning"; // yellow
 						}
+
+						$("#alert-box").html(`
+							<div class="alert alert-${alertType} alert-dismissible fade show" role="alert">
+								${result.message || "Operation completed."}
+							</div>
+						`);
+								// <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+						setTimeout(() => {
+							$(".alert").alert('close');
+						}, 3000);
 						order.clearItem();
 						printCart();
-						// location.reload()
+						location.reload()
 
 					},
 					error: function(err) {

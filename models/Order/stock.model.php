@@ -55,7 +55,7 @@ class Stock extends Model implements JsonSerializable{
                 // Log sale (link to purchase)
                 $insert = "INSERT INTO {$tx}stocks 
                             (medicines_id, qty, transection_type_id, reference_id, parent_id, expiry_date)
-                           VALUES ('$this->medicines_id', -$deduct, 2, '$this->transection_type_id', {$row['id']}, '{$row['expiry_date']}')";
+                           VALUES ('$this->medicines_id', -$deduct, 2, '$this->reference_id', {$row['id']}, '{$row['expiry_date']}')";
                 $db->query($insert);
             }
 
@@ -122,7 +122,13 @@ class Stock extends Model implements JsonSerializable{
 	}
 	public static function stock(){
 		global $db,$tx;
-		$result =$db->query("SELECT SUM(qty) qty FROM {$tx}stocks  ");
+		$result =$db->query("SELECT SUM(qty) qty FROM {$tx}stocks WHERE qty > 0 AND (expiry_date IS NULL OR expiry_date >= CURDATE())");
+		$stock=$result->fetch_object();
+			return $stock;
+	}
+	public static function expired_medicine(){
+		global $db,$tx;
+		$result =$db->query("SELECT SUM(qty) qty FROM {$tx}stocks WHERE expiry_date < CURDATE()");
 		$stock=$result->fetch_object();
 			return $stock;
 	}
@@ -134,7 +140,7 @@ class Stock extends Model implements JsonSerializable{
 	}
 	static function stock_report(){
 		global $db,$tx;
-		$result =$db->query("SELECT s.id,concat(name, ' ', strength) medicine,s.medicines_id,sum(s.qty) qty FROM {$tx}stocks s, {$tx}medicines m where m.id = s.medicines_id  GROUP by medicines_id");
+		$result =$db->query("SELECT s.id,concat(name, ' ', strength) medicine,s.medicines_id,sum(s.qty) qty FROM {$tx}stocks s, {$tx}medicines m where m.id = s.medicines_id AND (s.expiry_date IS NULL OR s.expiry_date >= CURDATE()) GROUP by medicines_id");
 		$data=[];
 		while($stock=$result->fetch_object()){
 			$data[]=$stock;

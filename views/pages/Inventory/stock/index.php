@@ -76,7 +76,7 @@
 									<div class="me-10 bg-danger-light w-50 h-50 rounded-circle text-center p-0 align-content-center"><i class="mdi mdi-close-circle fs-22"></i></div>
 									<div>
 										<p class="m-0 fw-600">Expired Medicine</p>
-										<h1 class="m-0 fw-500">80</h1>
+										<h1 class="m-0 fw-500"><?php echo (Stock::expired_medicine()->qty)  ?></h1>
 									</div>
 								</div>
 								<div class="dropdown">
