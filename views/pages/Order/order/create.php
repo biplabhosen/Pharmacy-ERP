@@ -299,13 +299,13 @@
 					},
 					success: function(res) {
 						let data = JSON.parse(res);
-						if (data.success) {
-							console.log(data);
+						if (data.message) {
+							console.log(data.message);
 
 						}
 						order.clearItem();
 						printCart();
-						location.reload()
+						// location.reload()
 
 					},
 					error: function(err) {
