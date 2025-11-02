@@ -14,7 +14,7 @@
 				<?php include "product_menu.php"?>
 				<li title="Dashboard"><a href="<?=$base_url?>/sales"><i data-feather="bar-chart-2"></i><span>Sales <span class="bg-danger fs-10 px-1 rounded">NEW</span> </span></a></li>
 				<?php include "order_menu1.php"?>
-				<li title="Dashboard"><a href="<?=$base_url?>/purchase"><i data-feather="bar-chart-2"></i><span>Purchase </span></a></li>
+				<?php include "purchase_menu1.php"?>
 				<?php include "payment_menu.php"?>
 				<li class="header">Apps & Pages </li>
 				<li title="Support"><a href="extra_app_ticket.html"><i data-feather="message-circle"></i><span>Support</span></a></li>
