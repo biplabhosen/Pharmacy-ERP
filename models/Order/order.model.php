@@ -134,7 +134,7 @@ class Order extends Model implements JsonSerializable{
 				$action_buttons.= Event::button(["name"=>"delete", "value"=>"Delete", "class"=>"btn btn-danger", "route"=>"order/confirm/$order->id"]);
 				$action_buttons.= "</div></td>";
 			}
-			$html.="<tr><td>$order->id</td><td>$order->sale_date</td><td> ". Customer::find($order->customer_id)->name ."</td><td>$order->user_id</td><td>$order->total_amount</td><td>$order->discount</td><td>$order->net_amount</td><td>$order->status_id</td><td>$order->created_at</td><td>$order->updated_at</td><td>$order->delivery_date</td> $action_buttons</tr>";
+			$html.="<tr><td>$order->id</td><td>$order->sale_date</td><td> ". Customer::find($order->customer_id)->name."</td><td>$order->user_id</td><td>$order->total_amount</td><td>$order->discount</td><td>$order->net_amount</td><td>$order->status_id</td><td>$order->created_at</td><td>$order->updated_at</td><td>$order->delivery_date</td> $action_buttons</tr>";
 		}
 		$html.="</table>";
 		$html.= pagination($page,$total_pages);

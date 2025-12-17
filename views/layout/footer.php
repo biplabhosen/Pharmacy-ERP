@@ -14,7 +14,7 @@
 		  </li>
 		</ul>
     </div>
-	  &copy; 2025 <a href="https://www.multipurposethemes.com/">Multipurpose Themes</a>. All Rights Reserved.
+	  &copy; 2025 <a href="#">Multipurpose Themes</a>. All Rights Reserved.
   </footer>
 
   	<!-- Control Sidebar -->

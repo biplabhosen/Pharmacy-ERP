@@ -71,7 +71,7 @@ class OrdersDetail extends Model implements JsonSerializable{
 	}
 	public static function findAllByOrder_id($id){
 		global $db,$tx;
-		$result =$db->query("select id,order_id,medicine_id,qty,unit_price,discount,created_at,updated_at from {$tx}orders_details where order_id='$id'");
+		$result =$db->query("select o.id,order_id,medicine_id,m.name,m.id,qty,unit_price,discount,o.created_at,o.updated_at from {$tx}orders_details o,{$tx}medicines m where medicine_id=m.id and order_id='$id'");
 		$ordersdetail=$result->fetch_all(MYSQLI_ASSOC);
 			return $ordersdetail;
 	}

@@ -140,7 +140,8 @@ class Stock extends Model implements JsonSerializable{
 	}
 	static function stock_report(){
 		global $db,$tx;
-		$result =$db->query("SELECT s.id,concat(name, ' ', strength) medicine,s.medicines_id,sum(s.qty) qty FROM {$tx}stocks s, {$tx}medicines m where m.id = s.medicines_id AND (s.expiry_date IS NULL OR s.expiry_date >= CURDATE()) GROUP by medicines_id");
+		$result =$db->query("SELECT s.id,concat(name, ' ', strength) medicine,s.medicines_id,sum(s.qty) qty FROM {$tx}stocks s, {$tx}medicines m WHERE  s.qty >= 0 AND m.id = s.medicines_id AND (s.expiry_date IS NULL OR s.expiry_date >= CURDATE()) GROUP by medicines_id"
+);
 		$data=[];
 		while($stock=$result->fetch_object()){
 			$data[]=$stock;
@@ -159,12 +160,13 @@ class Stock extends Model implements JsonSerializable{
 	public static function low_stock(){
 		global $db,$tx;
 		$result =$db->query("SELECT COUNT(*) AS low_stock_count
-		FROM (
-			SELECT medicines_id
-			FROM {$tx}stocks
-			GROUP BY medicines_id
-			HAVING SUM(qty) <= 10
-		) AS stock_summary;");
+FROM (
+    SELECT medicines_id
+    FROM {$tx}stocks
+    WHERE (expiry_date IS NULL OR expiry_date >= CURDATE())
+    GROUP BY medicines_id
+    HAVING SUM(CASE WHEN qty > 0 THEN qty ELSE 0 END) <= 10
+) AS stock_summary;");
 		$stock=$result->fetch_object();
 			return $stock;
 	}
@@ -175,7 +177,7 @@ class Stock extends Model implements JsonSerializable{
 			SELECT medicines_id
 			FROM {$tx}stocks
 			GROUP BY medicines_id
-			HAVING SUM(qty) <= 0
+			HAVING SUM(qty>0) <= 0
 		) AS stock_summary;");
 		$stock=$result->fetch_object();
 			return $stock;

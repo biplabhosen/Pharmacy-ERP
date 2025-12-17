@@ -47,7 +47,7 @@ class User implements JsonSerializable{
 	}
 	public static function all(){
 		global $db,$tx;
-		$result=$db->query("select id,name,photo,role_id,email,email_verified_at,password,remember_token,created_at,updated_at from {$tx}users");
+		$result=$db->query("select id,name,photo,role_id,email,password,created_at,updated_at from {$tx}users");
 		$data=[];
 		while($user=$result->fetch_object()){
 			$data[]=$user;

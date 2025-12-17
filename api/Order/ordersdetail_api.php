@@ -13,6 +13,9 @@ class OrdersDetailApi{
 	function find($data){
 		echo json_encode(["ordersdetail"=>OrdersDetail::find($data["id"])]);
 	}
+	function findByOid($data){
+		echo json_encode(["ordersdetail"=>OrdersDetail::findAllByOrder_id($data["id"])]);
+	}
 	function delete($data){
 		OrdersDetail::delete($data["id"]);
 		echo json_encode(["success" => "yes"]);

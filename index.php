@@ -9,7 +9,7 @@
      $password=trim($_POST["txtPassword"]);
      //echo $username," ",$password;
     //  $result=$db->query("select u.id,u.name,r.name from {$tx}users u,{$tx}roles r where r.id=u.role_id and u.name='$username' and u.password='$password'");
-     $result=$db->query("select u.id,u.password,u.email,u.img,u.phone,u.role_id,r.name role from {$tx}users u,{$tx}roles r where r.id=u.role_id and u.name='$username' ");
+     $result=$db->query("select u.id,u.password,u.email,u.photo,u.phone,u.role_id,r.name role from {$tx}users u,{$tx}roles r where r.id=u.role_id and u.name='$username' ");
       
     
       $user=$result->fetch_object();

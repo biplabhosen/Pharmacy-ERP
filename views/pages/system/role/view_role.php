@@ -19,7 +19,7 @@
      <div class="card">
       				<div class='card-body'>
 		<?php
-			echo Role::get_roles();
+			echo Role::get_role();
 		?>
 			</div>
     <div class="card-footer">

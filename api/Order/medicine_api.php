@@ -5,6 +5,9 @@ class MedicineApi{
 	function index(){
 		echo json_encode(["medicines"=>Medicine::all()]);
 	}
+	function category(){
+		echo json_encode(["category"=>Category::getAll()]);
+	}
 	function pagination($data){
 		$page=$data["page"];
 		$perpage=$data["perpage"];

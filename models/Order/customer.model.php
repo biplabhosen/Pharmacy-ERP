@@ -4,17 +4,19 @@ class Customer extends Model implements JsonSerializable{
 	public $name;
 	public $phone;
 	public $email;
+	public $photo;
 	public $address;
 	public $created_at;
 	public $updated_at;
 
 	public function __construct(){
 	}
-	public function set($id,$name,$phone,$email,$address,$created_at,$updated_at){
+	public function set($id,$name,$phone,$email,$photo,$address,$created_at,$updated_at){
 		$this->id=$id;
 		$this->name=$name;
 		$this->phone=$phone;
 		$this->email=$email;
+		$this->photo=$photo;
 		$this->address=$address;
 		$this->created_at=$created_at;
 		$this->updated_at=$updated_at;
@@ -22,12 +24,12 @@ class Customer extends Model implements JsonSerializable{
 	}
 	public function save(){
 		global $db,$tx;
-		$db->query("insert into {$tx}customers(name,phone,email,address,created_at,updated_at)values('$this->name','$this->phone','$this->email','$this->address','$this->created_at','$this->updated_at')");
+		$db->query("insert into {$tx}customers(name,phone,email,photo,address,created_at,updated_at)values('$this->name','$this->phone','$this->email','$this->photo','$this->address','$this->created_at','$this->updated_at')");
 		return $db->insert_id;
 	}
 	public function update(){
 		global $db,$tx;
-		$db->query("update {$tx}customers set name='$this->name',phone='$this->phone',email='$this->email',address='$this->address',created_at='$this->created_at',updated_at='$this->updated_at' where id='$this->id'");
+		$db->query("update {$tx}customers set name='$this->name',phone='$this->phone',email='$this->email',address='$this->address',updated_at='$this->updated_at' where id='$this->id'");
 	}
 	public static function delete($id){
 		global $db,$tx;

@@ -13,6 +13,9 @@ class StockApi{
 	function find($data){
 		echo json_encode(["stock"=>Stock::find($data["id"])]);
 	}
+	function stock(){
+		echo json_encode(["stock"=>Stock::stock(),"lowstock"=>Stock::low_stock(),"stockout"=>Stock::stock_out(),"expired"=>Stock::expired_medicine(),]);
+	}
 	function delete($data){
 		Stock::delete($data["id"]);
 		echo json_encode(["success" => "yes"]);
